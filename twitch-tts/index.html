@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@500&family=Knewave&family=Roboto&display=swap');
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+            background-color: whitesmoke;
+            font: 1.5vmin 'Roboto', sans-serif;
+        }
+
+        #title {
+            font: 12vmin 'Knewave', cursive;
+            color: #333;
+            transform: rotate3d(1, 0, -0.2, 10deg);
+            text-shadow: 0 1px 0 #ccc,
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+        }
+
+        #box {
+            display: flex;
+            align-items: center;
+        }
+
+        select {
+            font: 2vmin 'Roboto', sans-serif;
+            border-radius: 1vmin;
+        }
+
+        #info {
+            font: 2vmin 'Chivo Mono', monospace;
+            color: #999;
+        }
+
+        #channel {
+            box-shadow: .1vmin .4vmin 4vmin #999;
+            font-size: 3vmin;
+            padding: 1vmin;
+            border: .2vmin solid deepskyblue;
+            border-radius: 1vmin;
+        }
+
+        input[type=checkbox] {
+            height: 0;
+            width: 0;
+            visibility: hidden;
+        }
+
+        label {
+            margin-left: 3vmin;
+            width: 7vmin;
+            height: 4vmin;
+            position: relative;
+            display: block;
+            cursor: pointer;
+            text-indent: -9999px;
+            border-radius: 3vmin;
+            background: #ccc;
+            transition: .3s;
+        }
+
+        label:after {
+            content: '';
+            position: absolute;
+            top: .5vmin;
+            left: .5vmin;
+            width: 3vmin;
+            height: 3vmin;
+            background: #fff;
+            border-radius: 90px;
+            transition: .3s;
+        }
+
+        input:checked+label {
+            background: deepskyblue;
+        }
+
+        input:checked+label:after {
+            left: 3.5vmin;
+        }
+
+        #availableVoices {
+            color: darkolivegreen;
+        }
+
+        #chat > div {
+            --col: #FF2D95;
+            color: white;
+            font-size: 1.5vmin;
+            height: 10vmin;
+            width: 30vmin;
+            background: linear-gradient(353deg, rgba(0,0,0,.95) 0%, rgba(80,80,80,.95) 100%);
+            border-radius: 0 0 1vmin 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            box-shadow: 0 0 .1vmin white, 0 0 .2vmin white;
+            animation: fade 3s ease-in-out forwards;
+        }
+
+        #chat > div > div:nth-child(1) {
+            display: inline-block;
+            margin: .5vmin;
+            padding: .5vmin 3vmin;
+            background-color: var(--col);
+            color: white;
+            transform: translateX(-1vmin);
+            text-shadow: 0 0 .2vmin black, 0 0 .4vmin black, 0 0 .6vmin black;
+            box-shadow: .2vmin .2vmin 0 black;
+        }
+
+        #chat > div > div:nth-child(2) {
+            padding: 1vmin;
+            font-size: 2vmin;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+                transform: rotate3d(1, 0, 0, 90deg) translate(-50%, -50%);
+            }
+            30%, 70% {
+                opacity: 1;
+                transform: rotate3d(0, 0, 0, 90deg) translate(-50%, -50%);
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #creator {
+            color: lightgray;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="title">Twitch Reader</div>
+    <div id="box">
+        <input type="text" placeholder="Twitch channel name" id="channel">
+        <input type="checkbox" id="toggle">
+        <label for="toggle">
+    </div>
+    <div id="info"></div>
+    <div id="availableVoices">
+        <div>-- Load this website with Microsoft Edge browser to use free Natural voices --</div>
+        <select id="voiceSelect"></select>
+    </div>
+    <div id="creator">@sheuronazxe</div>
+    <div id="chat"></div>
+</body>
+
+<script src="js/tmi.min.js"></script>
+<script src="js/general.js"></script>
+
+</html>
