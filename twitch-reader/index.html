@@ -11,131 +11,132 @@
 
         body {
             margin: 0;
-            height: 100vh;
+            font: 18px 'Roboto', sans-serif;
+            background: repeating-linear-gradient(-45deg, #D5D5D5, #D5D5D5 20px, #D8D8D8 20px, #D8D8D8 40px);
+            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.4);
+        }
+
+        #wrapper {
+            margin: 0 auto;
+            min-height: 100vh;
+            width: 500px;
+            padding: 20px;
             display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            flex-direction: column;
+            flex-flow: column;
             background-color: whitesmoke;
-            font: 1.5vmin 'Roboto', sans-serif;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
         }
 
-        #title {
-            font: 12vmin 'Knewave', cursive;
-            color: #333;
-            transform: rotate3d(1, 0, -0.2, 10deg);
-            text-shadow: 0 1px 0 #ccc,
-               0 2px 0 #c9c9c9,
-               0 3px 0 #bbb,
-               0 4px 0 #b9b9b9,
-               0 5px 0 #aaa,
-               0 6px 1px rgba(0,0,0,.1),
-               0 0 5px rgba(0,0,0,.1),
-               0 1px 3px rgba(0,0,0,.3),
-               0 3px 5px rgba(0,0,0,.2),
-               0 5px 10px rgba(0,0,0,.25),
-               0 10px 10px rgba(0,0,0,.2),
-               0 20px 20px rgba(0,0,0,.15);
+        img {
+            filter: drop-shadow(0px 3px 3px rgb(0 0 0 / 0.4));
+            margin: 60px 0;
         }
 
-        #box {
-            display: flex;
-            align-items: center;
+        #userInput {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 65px;
+            row-gap: 25px;
         }
 
-        select {
-            font: 2vmin 'Roboto', sans-serif;
-            border-radius: 1vmin;
-        }
-
-        #info {
-            font: 2vmin 'Chivo Mono', monospace;
-            color: #999;
-        }
-
-        #channel {
-            box-shadow: .1vmin .4vmin 4vmin #999;
-            font-size: 3vmin;
-            padding: 1vmin;
-            border: .2vmin solid deepskyblue;
-            border-radius: 1vmin;
+        input[type=text] {
+            font-size: 18px;
+            padding: 6px 20px;
+            width: 100%;
+            border: 2px solid deepskyblue;
+            border-radius: 10px;
+            box-shadow: 1px 5px 20px #999;
+            box-sizing: border-box;
         }
 
         input[type=checkbox] {
-            height: 0;
-            width: 0;
-            visibility: hidden;
+            display: none;
         }
 
         label {
-            margin-left: 3vmin;
-            width: 7vmin;
-            height: 4vmin;
+            background-color: #CCC;
             position: relative;
-            display: block;
-            cursor: pointer;
-            text-indent: -9999px;
-            border-radius: 3vmin;
-            background: #ccc;
-            transition: .3s;
+            border-radius: 4px;
+            margin: 5px 0 5px 15px;
         }
 
         label:after {
             content: '';
             position: absolute;
-            top: .5vmin;
-            left: .5vmin;
-            width: 3vmin;
-            height: 3vmin;
+            width: 45%;
+            height: 75%;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-92%);
             background: #fff;
-            border-radius: 90px;
+            border-radius: 3px;
             transition: .3s;
         }
 
         input:checked+label {
             background: deepskyblue;
+            transition: .3s;
         }
 
         input:checked+label:after {
-            left: 3.5vmin;
+            transform: translateY(-50%) translateX(-8%);
+        }
+
+        #info {
+            grid-area: 2 / 1 / 2 / 3;
+            height: 100px;
+            font-family: 'Chivo Mono', monospace;
+            color: #999;
+            text-align: center;
+
         }
 
         #availableVoices {
-            color: darkolivegreen;
+            padding: 10px;
+            margin-bottom: 40px;
+            font-size: 80%;
+            border: 1px solid #999;
+            background-color: antiquewhite;
         }
 
-        #chat > div {
-            --col: #FF2D95;
-            color: white;
-            font-size: 1.5vmin;
-            height: 10vmin;
-            width: 30vmin;
-            background: linear-gradient(353deg, rgba(0,0,0,.95) 0%, rgba(80,80,80,.95) 100%);
-            border-radius: 0 0 1vmin 0;
-            transform: translate(-50%, -50%);
+        select {
+            width: 100%;
+            padding: 4px;
+            margin-top: 10px;
+        }
+
+        .chatMessaje {
+            --col: white;
+            color: whitesmoke;
+            position: relative;
+            font-size: 20px;
             pointer-events: none;
-            box-shadow: 0 0 .1vmin white, 0 0 .2vmin white;
             animation: fade 3s ease-in-out forwards;
+            transform: translate(-50%, -50%);
         }
 
-        #chat > div > div:nth-child(1) {
-            display: inline-block;
-            margin: .5vmin;
-            padding: .5vmin 3vmin;
-            background-color: var(--col);
+        .chatMessaje span {
             color: white;
-            transform: translateX(-1vmin);
-            text-shadow: 0 0 .2vmin black, 0 0 .4vmin black, 0 0 .6vmin black;
-            box-shadow: .2vmin .2vmin 0 black;
+            position: absolute;
+            background-color: var(--col);
+            transform: translateX(-4%) translateY(17%);
+            padding: 2px 20px;
+            font-size: 70%;
+            text-shadow: 0 0 2px black, 0 0 2px black;
+            box-shadow: 2px 2px 0 black;
         }
 
-        #chat > div > div:nth-child(2) {
-            padding: 1vmin;
-            font-size: 2vmin;
-            text-align: center;
+        .chatMessaje div {
+            background: linear-gradient(353deg, rgba(0, 0, 0, .95) 0%, rgba(80, 80, 80, .95) 100%);
+            box-shadow: 0 0 1px white inset;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            text-align: center;
+            width: 200px;
+            padding: 30px 20px 20px 20px;
+            border-radius: 0 10px 0 10px;
         }
 
         @keyframes fade {
@@ -143,36 +144,53 @@
                 opacity: 0;
                 transform: rotate3d(1, 0, 0, 90deg) translate(-50%, -50%);
             }
-            30%, 70% {
+
+            30%,
+            70% {
                 opacity: 1;
                 transform: rotate3d(0, 0, 0, 90deg) translate(-50%, -50%);
             }
+
             100% {
                 opacity: 0;
+                transform: translate(-50%, -80%);
             }
         }
 
-        #creator {
+        #footer {
             color: lightgray;
+            font-weight: bold;
+            margin-top: auto;
+            align-self: center;
         }
 
+        @media (max-width:425px) {
+            #wrapper {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div id="title">Twitch Reader</div>
-    <div id="box">
-        <input type="text" placeholder="Twitch channel name" id="channel">
-        <input type="checkbox" id="toggle">
-        <label for="toggle">
+
+    <div id="wrapper">
+        <img src="assets/logo.svg" alt="Twitch Reader">
+        <div id="userInput">
+            <input type="text" id="channel" placeholder="Twitch channel name">
+            <input type="checkbox" id="toggle">
+            <label for="toggle" id="toggle"></label>
+            <div id="info"></div>
+        </div>
+        <div id="availableVoices">
+            <div>Load this website with Microsoft Edge browser to use free Natural voices.</div>
+            <select id="voiceSelect"></select>
+        </div>
+        <div id="footer">@sheuronazxe</div>
     </div>
-    <div id="info"></div>
-    <div id="availableVoices">
-        <div>-- Load this website with Microsoft Edge browser to use free Natural voices --</div>
-        <select id="voiceSelect"></select>
-    </div>
-    <div id="creator">@sheuronazxe</div>
+
     <div id="chat"></div>
+
 </body>
 
 <script src="js/tmi.min.js"></script>

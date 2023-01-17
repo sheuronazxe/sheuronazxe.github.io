@@ -1,4 +1,4 @@
-const bots = ["nightbot", "moobot", "streamelements", "streamLabs"];
+const bots = ["Nightbot", "Moobot", "StreamElements", "StreamLabs"];
 
 const client = new tmi.Client();
 const channelInput = document.getElementById("channel");
@@ -6,23 +6,24 @@ const toggle = document.getElementById("toggle");
 const info = document.getElementById("info");
 const voiceSelect = document.getElementById('voiceSelect');
 const chat = document.getElementById('chat');
-let voices;
 
 channelInput.value = localStorage.getItem("channel");
 
 // TTS ---
 
-info.innerHTML = ('speechSynthesis' in window) ? "Your browser <strong>supports</strong> speech synthesis." : "Sorry your browser <strong>does not support</strong> speech synthesis.";
+info.innerHTML = ("speechSynthesis" in window) ? "Your browser <strong>supports</strong> speech synthesis." : "Sorry your browser <strong>does not support</strong> speech synthesis.";
 
-window.speechSynthesis.onvoiceschanged = () => {
+let voices = [];
+
+function populateVoiceList() {
     voices = window.speechSynthesis.getVoices();
-
     voices.forEach((voice) => {
         const option = document.createElement("option");
         option.value = voice.name;
         option.text = voice.name;
         voiceSelect.appendChild(option);
     });
+
     const storedVoice = localStorage.getItem("selectedVoice");
     if (storedVoice !== null) voiceSelect.value = storedVoice;
 
@@ -30,10 +31,13 @@ window.speechSynthesis.onvoiceschanged = () => {
         const selectedVoice = voiceSelect.options[voiceSelect.selectedIndex].value;
         const utterance = new SpeechSynthesisUtterance("Twitch Reader");
         utterance.voice = voices.find(voice => voice.name === selectedVoice);
-        speechSynthesis.speak(utterance);
+        window.speechSynthesis.speak(utterance);
         localStorage.setItem("selectedVoice", selectedVoice);
     }
 }
+populateVoiceList();
+if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = populateVoiceList;
+
 
 // CHAT ---
 
@@ -76,29 +80,22 @@ client.on('message', (channel, tags, message, self) => {
         utterance.voice = voices.find(voice => voice.name === selectedVoice);
         speechSynthesis.speak(utterance);
 
-        const vmin = Math.min(window.innerWidth, window.innerHeight);
-        const randomX = Math.floor(Math.random() * (window.innerWidth - (vmin * 0.4)));
-        const randomY = Math.floor(Math.random() * (window.innerHeight - (vmin * 0.2)));
-
         const item = document.createElement("div");
-        chat.appendChild(item);
+        const topX = 140;
+        const topY = 40;
+        const bottomX = window.innerWidth - 140;
+        const bottomY = window.innerHeight - 40;
 
-        const rect = item.getBoundingClientRect();
-        const topX = rect.width / 2 + vmin * .05
-        const topY = rect.height / 2 + vmin * .05;
-        const bottomX = window.innerWidth - rect.width / 2 - vmin * .05;
-        const bottomY = window.innerHeight - rect.height / 2 - vmin * .05;
-
+        item.className = "chatMessaje";
         item.style.position = "absolute";
         item.style.left = Math.random() * (bottomX - topX) + topX + "px";
         item.style.top = Math.random() * (bottomY - topY) + topY + "px";
         item.style.setProperty("--col", ("#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0")));
-        item.innerHTML += "<div>" + tags["display-name"] + "</div>";
+        item.innerHTML += "<span>" + tags["display-name"] + "</span>";
         item.innerHTML += "<div>" + message + "</div>";
+        chat.appendChild(item);
 
-        setTimeout(() => {
-            chat.removeChild(item);
-        }, 10000);
+        setTimeout(() => { chat.removeChild(item) }, 10000);
 
     }
 
