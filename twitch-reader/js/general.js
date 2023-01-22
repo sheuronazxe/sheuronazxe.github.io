@@ -10,7 +10,7 @@ const ignoreButton = document.getElementById('ignoreButton');
 const bannedDiv = document.getElementById('bannedDiv');
 const bannedUsers = JSON.parse(localStorage.bannedUsers || '["Nightbot", "Moobot", "StreamElements", "Streamlabs"]');
 
-channelInput.value = localStorage.channel;
+channelInput.value = localStorage.channel || "";
 volumeInput.value = localStorage.volume || 1;
 
 
