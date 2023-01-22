@@ -1,13 +1,18 @@
-const bots = ["Nightbot", "Moobot", "StreamElements", "StreamLabs"];
-
 const client = new tmi.Client();
 const channelInput = document.getElementById("channel");
 const toggle = document.getElementById("toggle");
 const info = document.getElementById("info");
 const voiceSelect = document.getElementById('voiceSelect');
 const chat = document.getElementById('chat');
+const volumeInput = document.getElementById("volume");
+const ignoreInput = document.getElementById('ignoreInput');
+const ignoreButton = document.getElementById('ignoreButton');
+const bannedDiv = document.getElementById('bannedDiv');
+const bannedUsers = JSON.parse(localStorage.bannedUsers || '["Nightbot", "Moobot", "StreamElements", "Streamlabs"]');
 
-channelInput.value = localStorage.getItem("channel");
+channelInput.value = localStorage.channel;
+volumeInput.value = localStorage.volume || 1;
+
 
 // TTS ---
 
@@ -19,24 +24,29 @@ function populateVoiceList() {
     voices = window.speechSynthesis.getVoices();
     voices.forEach((voice) => {
         const option = document.createElement("option");
-        option.value = voice.name;
         option.text = voice.name;
         voiceSelect.appendChild(option);
     });
 
-    const storedVoice = localStorage.getItem("selectedVoice");
-    if (storedVoice !== null) voiceSelect.value = storedVoice;
+    voiceSelect.selectedIndex = localStorage.selectedVoice || voiceSelect.selectedIndex;
 
     voiceSelect.onchange = () => {
-        const selectedVoice = voiceSelect.options[voiceSelect.selectedIndex].value;
-        const utterance = new SpeechSynthesisUtterance("Twitch Reader");
-        utterance.voice = voices.find(voice => voice.name === selectedVoice);
-        window.speechSynthesis.speak(utterance);
-        localStorage.setItem("selectedVoice", selectedVoice);
+        speak("Twitch Reader");
+        localStorage.selectedVoice = voiceSelect.selectedIndex;
     }
 }
 populateVoiceList();
 if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = populateVoiceList;
+
+function speak(msg) {
+    const utterance = new SpeechSynthesisUtterance(msg);
+    utterance.voice = voices[voiceSelect.selectedIndex];
+    utterance.volume = parseFloat(volumeInput.value);
+    window.speechSynthesis.speak(utterance);
+    localStorage.selectedVoice = voiceSelect.selectedIndex;
+}
+
+volumeInput.onchange = () => localStorage.volume = volumeInput.value;
 
 
 // CHAT ---
@@ -46,7 +56,7 @@ channelInput.addEventListener("input", () => {
         client.disconnect();
         toggle.checked = false;
     }
-    localStorage.setItem("channel", channelInput.value);
+    localStorage.channel = channelInput.value;
 });
 
 toggle.onchange = () => {
@@ -73,12 +83,9 @@ client.on("join", (channel, username, self) => {
 
 client.on('message', (channel, tags, message, self) => {
 
-    if (!bots.includes(tags["display-name"])) {
+    if (!bannedUsers.includes(tags["display-name"])) {
 
-        const selectedVoice = voiceSelect.options[voiceSelect.selectedIndex].value;
-        const utterance = new SpeechSynthesisUtterance(message);
-        utterance.voice = voices.find(voice => voice.name === selectedVoice);
-        speechSynthesis.speak(utterance);
+        speak(message);
 
         const item = document.createElement("div");
         const topX = 140;
@@ -100,3 +107,28 @@ client.on('message', (channel, tags, message, self) => {
     }
 
 });
+
+
+// IGNORE USERS ---
+
+bannedUsers.forEach(value => updateBanned(value));
+
+function updateBanned(name) {
+    const user = document.createElement("span");
+    user.innerHTML = name;
+    user.onclick = (e) => {
+        bannedDiv.removeChild(e.currentTarget);
+        bannedUsers.splice(bannedUsers.indexOf(name),1);
+        localStorage.bannedUsers = JSON.stringify(bannedUsers);
+    };
+    bannedDiv.appendChild(user);
+}
+
+ignoreButton.onclick = () => {
+    if (ignoreInput.value) {
+        updateBanned(ignoreInput.value);
+        bannedUsers.push(ignoreInput.value);
+        ignoreInput.value = "";
+        localStorage.bannedUsers = JSON.stringify(bannedUsers);
+    }
+}

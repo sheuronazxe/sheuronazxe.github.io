@@ -40,7 +40,7 @@
             row-gap: 25px;
         }
 
-        input[type=text] {
+        #userInput input[type=text] {
             font-size: 18px;
             padding: 6px 20px;
             width: 100%;
@@ -50,18 +50,19 @@
             box-sizing: border-box;
         }
 
-        input[type=checkbox] {
+        #userInput input[type=checkbox] {
             display: none;
         }
 
-        label {
+        #userInput label {
             background-color: #CCC;
             position: relative;
             border-radius: 4px;
             margin: 5px 0 5px 15px;
+            cursor: pointer;
         }
 
-        label:after {
+        #userInput label:after {
             content: '';
             position: absolute;
             width: 45%;
@@ -74,12 +75,12 @@
             transition: .3s;
         }
 
-        input:checked+label {
+        #userInput input:checked + label {
             background: deepskyblue;
             transition: .3s;
         }
 
-        input:checked+label:after {
+        #userInput input:checked+label:after {
             transform: translateY(-50%) translateX(-8%);
         }
 
@@ -104,6 +105,42 @@
             width: 100%;
             padding: 4px;
             margin-top: 10px;
+        }
+
+        #options {
+            display: flex;
+            font-size: 60%;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        #options div:first-child {
+            display: flex;
+            align-items: center;
+        }
+
+        #bannedDiv {
+            border: 2px dashed #c44;
+            padding: 5px;
+        }
+        #bannedDiv span {
+            display: inline-block;
+            background-color: #444;
+            color: white;
+            margin: 5px;
+            padding: 5px;
+            font-size: 60%;
+            border-radius: 5px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        #bannedDiv span::after {
+            content: '\00d7';
+            color: #f66;
+            margin-left: 5px;
+            width: 10px;
+            font-weight: 700;
         }
 
         .chatMessaje {
@@ -179,13 +216,27 @@
         <div id="userInput">
             <input type="text" id="channel" placeholder="Twitch channel name">
             <input type="checkbox" id="toggle">
-            <label for="toggle" id="toggle"></label>
+            <label for="toggle" aria-label="toggle"></label>
             <div id="info"></div>
         </div>
         <div id="availableVoices">
             <div>Load this website with Microsoft Edge browser to use free Natural voices.</div>
-            <select id="voiceSelect"></select>
+            <select id="voiceSelect" aria-label="voices"></select>
         </div>
+
+        <div id="options">
+            <div>
+                <label for="volume">VOLUME</label>
+                <input type="range" min="0" max="1" step="0.1" id="volume">
+            </div>
+            <div>
+                <input type="text" maxlength="25" size="12" placeholder="username" id="ignoreInput">
+                <input type="button" value="IGNORE USER" id="ignoreButton">
+            </div>
+        </div>
+
+        <div id="bannedDiv"></div>
+
         <div id="footer">@sheuronazxe</div>
     </div>
 
