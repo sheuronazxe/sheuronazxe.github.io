@@ -5,8 +5,6 @@ const info = document.getElementById("info");
 const voiceSelect = document.getElementById('voiceSelect');
 const chat = document.getElementById('chat');
 const volumeInput = document.getElementById("volume");
-const ignoreInput = document.getElementById('ignoreInput');
-const ignoreButton = document.getElementById('ignoreButton');
 const bannedDiv = document.getElementById('bannedDiv');
 const bannedUsers = JSON.parse(localStorage.bannedUsers || '["Nightbot", "Moobot", "StreamElements", "Streamlabs"]');
 
@@ -33,8 +31,8 @@ function populateVoiceList() {
     voiceSelect.onchange = () => {
         speak("Twitch Reader");
         localStorage.selectedVoice = voiceSelect.selectedIndex;
-    }
-}
+    };
+};
 populateVoiceList();
 if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = populateVoiceList;
 
@@ -44,7 +42,7 @@ function speak(msg) {
     utterance.volume = parseFloat(volumeInput.value);
     window.speechSynthesis.speak(utterance);
     localStorage.selectedVoice = voiceSelect.selectedIndex;
-}
+};
 
 volumeInput.onchange = () => localStorage.volume = volumeInput.value;
 
@@ -62,7 +60,7 @@ channelInput.addEventListener("input", () => {
 toggle.onchange = () => {
     client.channels = [channelInput.value];
     toggle.checked ? client.connect() : client.disconnect();
-}
+};
 
 client.on("connecting", (address, port) => {
     info.innerHTML = "Connecting to " + address;
@@ -122,13 +120,12 @@ function updateBanned(name) {
         localStorage.bannedUsers = JSON.stringify(bannedUsers);
     };
     bannedDiv.appendChild(user);
-}
+};
 
-ignoreButton.onclick = () => {
-    if (ignoreInput.value) {
-        updateBanned(ignoreInput.value);
-        bannedUsers.push(ignoreInput.value);
-        ignoreInput.value = "";
+function addBanned(user) {
+    if (user) {
+        updateBanned(user);
+        bannedUsers.push(user);
         localStorage.bannedUsers = JSON.stringify(bannedUsers);
-    }
-}
+    };
+};
