@@ -23,14 +23,15 @@ function populateVoiceList() {
     voices.forEach((voice) => {
         const option = document.createElement("option");
         option.text = voice.name;
+        option.value = voice.voiceURI;
         voiceSelect.appendChild(option);
     });
 
-    voiceSelect.selectedIndex = localStorage.selectedVoice || voiceSelect.selectedIndex;
+    voiceSelect.value = localStorage.selectedVoice || voiceSelect.value;
 
     voiceSelect.onchange = () => {
         speak("Twitch Reader");
-        localStorage.selectedVoice = voiceSelect.selectedIndex;
+        localStorage.selectedVoice = voiceSelect.value;
     };
 };
 populateVoiceList();
@@ -38,10 +39,9 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis
 
 function speak(msg) {
     const utterance = new SpeechSynthesisUtterance(msg);
-    utterance.voice = voices[voiceSelect.selectedIndex];
+    utterance.voice = voices[voices.findIndex(x => x.voiceURI === voiceSelect.value)];
     utterance.volume = parseFloat(volumeInput.value);
     window.speechSynthesis.speak(utterance);
-    localStorage.selectedVoice = voiceSelect.selectedIndex;
 };
 
 volumeInput.onchange = () => localStorage.volume = volumeInput.value;
