@@ -5,12 +5,13 @@ const info = document.getElementById("info");
 const voiceSelect = document.getElementById('voiceSelect');
 const chat = document.getElementById('chat');
 const volumeInput = document.getElementById("volume");
+const whitelist = document.getElementById("whitelist");
 const bannedDiv = document.getElementById('bannedDiv');
 const bannedUsers = JSON.parse(localStorage.bannedUsers || '["Nightbot", "Moobot", "StreamElements", "Streamlabs"]');
 
 channelInput.value = localStorage.channel || "";
 volumeInput.value = localStorage.volume || 1;
-
+whitelist.checked = localStorage.whitelist === 'true';
 
 // TTS ---
 
@@ -45,7 +46,7 @@ function speak(msg) {
 };
 
 volumeInput.onchange = () => localStorage.volume = volumeInput.value;
-
+whitelist.onchange = () => localStorage.whitelist = whitelist.checked;
 
 // CHAT ---
 
@@ -81,7 +82,7 @@ client.on("join", (channel, username, self) => {
 
 client.on('message', (channel, tags, message, self) => {
 
-    if (!bannedUsers.includes(tags["display-name"])) {
+    if (bannedUsers.includes(tags["display-name"]) === whitelist.checked) {
 
         speak(message);
 

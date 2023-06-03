@@ -99,13 +99,26 @@
             margin-bottom: 40px;
             font-size: 80%;
             border: 1px solid #999;
-            background-color: antiquewhite;
+            border-radius: 10px;
+            background: rgb(229,195,46);
+            background: linear-gradient(355deg, rgba(229,195,46,1) 30%, rgba(255,250,203,1) 100%);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
         }
 
         select {
             width: 100%;
             padding: 4px;
             margin-top: 10px;
+        }
+
+        #volumediv {
+            color: #740;
+            accent-color: #740;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 80%;
+            font-weight: bold;
         }
 
         #options {
@@ -221,18 +234,19 @@
             <div id="info"></div>
         </div>
         <div id="availableVoices">
-            <div>Load this website with Microsoft Edge browser to use free Natural voices.</div>
+            <div>Powered by Web Speech API. Load this website with Microsoft Edge browser to use free Natural voices.</div>
             <select id="voiceSelect" aria-label="voices"></select>
-        </div>
-
-        <div id="options">
-            <div>
+            <div id="volumediv">
                 <label for="volume">VOLUME</label>
                 <input type="range" min="0" max="1" step="0.1" id="volume">
             </div>
+        </div>
+
+        <div id="options">
+            <div><input type="checkbox" name="" id="whitelist"><label style="cursor: help; user-select: none;" for="whitelist" title="Turn banned list into whitelist. Only read messages from users in list.">Whitelist mode</label></div>
             <form onsubmit="addBanned(this.ignoreInput.value); this.ignoreInput.value = ''; return false;">
                 <input type="text" maxlength="25" size="10" placeholder="username" name="ignoreInput">
-                <input type="submit" value="IGNORE USER">
+                <input type="submit" value="add user">
             </form>
         </div>
 
