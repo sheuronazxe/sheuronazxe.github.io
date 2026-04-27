@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="Futura Cybercafe — In Memoriam (1998–2018). Homenaje al legendario cibercafé de Lugo.">
+    <meta property="og:title" content="Futura">
+    <meta property="og:description" content="In Memoriam 1998 ~ 2018">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#050a02">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600&family=VT323&display=swap">
+    <link rel="preload" href="static/scooter.opus" as="fetch" crossorigin>
+    <title>Futura</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <noscript>
+        <div class="no-js-message">Esta página requiere JavaScript para mostrar la experiencia completa.</div>
+    </noscript>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="svg-defs">
+        <defs>
+            <path id="futura-path" d="M48 50.25h48v16H48v44c0 31-48 31-48 0v-60h32v-48h64c32 0 32 29 32 32h-16c0-1 0-16-16-16H48zm-48-48h20v36H0zM274 98.25c0 33-28 33-32 33h-64c-32 0-32-29-32-33v-75c0-31 48-31 48 0v39c0 19-21 14-29 25-6 7-4 28 13 28h64c2 0 16 0 16-17v-96h16zm-80-1q0 7-7 7-6 0-6-7 0-6 6-7 7 0 7 7M381 18.25v92c0 31-48 31-48 0v-60h32v-48h24c4 0 34 0 32 32h-16c0-2-1-16-16-16zm-28 20h-20v-20h-8c-2 0-16 0-16 16h-16q0-32 32-32h28zM568 98.25c0 4 0 33-32 33h-64c-32 0-32-29-32-33v-75c0-31 48-31 48 0v39c0 19-20 14-29 25-6 7-4 28 13 28h64c2 0 16 0 16-17v-96h16zm-79-1q-1 7-7 7-7 0-7-7 0-6 7-7 7 0 7 7M692 66.25h-19l48 65h-20l-48-65h-12v44c0 31-48 31-48 0v-60h32v-48h67c16 0 32 16 32 32 0 17-16 32-32 32m0-48h-51v32h51c20 0 20-32 0-32m-99-16h20v36h-20zM873 131.25h-16v-44h-64v23c0 31-48 33-48 0v-76c1-11 4-32 32-32h64c4 0 32 0 32 32zm-80-60h64v-37c0-2 0-16-16-16h-64c-8 0-16 8-16 18 0 5.755 2.269 9.231 5.598 11.686 1.99 1.021 4.556 2.071 7.77 3.941 6.662 2.61 13.95 4.774 17.072 11.476q1.894 3.559 1.56 7.898Zm0-36q0 7-6 7-7 0-7-7 0-6 7-6 6 0 6 6"/>
+        </defs>
+    </svg>
+
+    <div id="power-screen">
+        <button class="power-btn" id="power-btn" type="button" aria-label="Encender">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="12" y1="2" x2="12" y2="12"></line>
+                <path d="M16.24 7.76a6 6 0 0 1-8.49 8.49 6 6 0 0 1 0-8.49"></path>
+            </svg>
+        </button>
+        <div class="power-label">Pulsa para encender</div>
+    </div>
+
+    <div id="crt-overlay">
+        <canvas id="crt-canvas"></canvas>
+    </div>
+
+    <main id="main-page">
+        <div id="polaroid-layer"></div>
+        <div class="beam"></div>
+        <div class="bloom"></div>
+
+        <header class="logo-container">
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+
+            <div class="svg-wrapper">
+                <svg class="svg-layer svg-glow-outer" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <svg class="svg-layer svg-glow-inner" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <svg class="svg-layer svg-glitch-a" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <svg class="svg-layer svg-glitch-b" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <svg class="svg-layer svg-glitch-c" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <svg class="svg-main" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <svg class="svg-layer svg-draw" viewBox="0 0 873 135" aria-hidden="true"><use href="#futura-path"/></svg>
+                <div class="write-head"></div>
+                <div class="noise-bar noise-bar--1"></div>
+                <div class="noise-bar noise-bar--2"></div>
+                <div class="noise-bar noise-bar--3"></div>
+            </div>
+
+            <p class="years">1998 ~ 2018</p>
+            <div class="divider"></div>
+            <p class="memo">in memoriam</p>
+        </header>
+    </main>
+
+    <button class="audio-toggle" id="audio-toggle" type="button" aria-label="Activar o desactivar audio" aria-pressed="false">
+        <svg class="vol-on" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.49 4.49 0 0 0 2.5-3.5zM14 3.23v2.06a6.51 6.51 0 0 1 0 13.42v2.06A8.5 8.5 0 0 0 14 3.23z"/>
+        </svg>
+        <svg class="vol-off" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.49 4.49 0 0 0 2.5-3.5z"/>
+            <line x1="23" y1="1" x2="1" y2="23" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </button>
+
+    <script src="static/script.js" defer></script>
+</body>
+</html>
